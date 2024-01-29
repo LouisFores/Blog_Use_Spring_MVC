@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/page/layout :: head">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<header th:replace="/page/layout :: hearder"></header>
+
+<div class="content clearfix">
+    <div class="main-content">
+        <h1 class="recent-post-title">Post List</h1>
+        <div class="container">
+            <div class="card" th:each="plu : ${listPostUser}">
+                <div class="card__header">
+                    <img th:src="@{'/Blog/' + ${plu.getFileImgTitle()}}" alt="card__image"
+                         class="card__image" width="600">
+                </div>
+                <div class="card__body">
+                    <div>
+                        <a th:href="@{/blog/read-more/{id}(id=${plu.getId_post()})}" class="tag tag-brown">Read more</a>
+                        <a th:href="@{/blog/update-post/{id}(id=${plu.getId_post()})}" class="tag tag-blue">Edit</a>
+                        <a th:href="@{/blog/delete-post/{id}(id=${plu.getId_post()})}" class="tag tag-red" onclick="return confirmDelete()">Delete</a>                    </div>
+                    <h4 th:text="${plu.title}"></h4>
+                    <p th:text="${plu.summary}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="/page/layout :: footer"></div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+    function confirmDelete() {
+        let result = confirm("Bạn có chắc chắn muốn xóa bài đăng này?");
+        if (result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
+</html>

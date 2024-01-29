@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/home/layout :: head">
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+<body>
+<header th:replace="/home/layout :: hearder"></header>
+
+
+<div class="page-wrapper">
+    <div class="post-slider">
+        <h2 class="slider-title">Trending Posts</h2>
+        <div class="post-wrapper">
+            <div class="post" th:each="tr : ${trendingPosts}">
+                <img th:src="@{'/Blog/' + ${tr.getFileImgTitle()}}" class="slider-image">
+                <div class="post-infor">
+                    <h4><a th:href="@{/blog/read-more/{id}(id=${tr.getId_post()})}" th:text="${tr.title}"></a></h4>
+                    <i class="fa fa-user"></i><label th:text="${tr.user.getUserName()}"></label>
+                    &nbsp;
+                    <i class="fa fa-calendar"></i><label th:text="${tr.timeCreate}"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Content -->
+<div class="content clearfix  ">
+    <div class="main-content">
+        <h1 class="recent-post-title">Recent Posts</h1>
+        <div class="post" th:each="pl : ${postList}">
+            <img th:src="@{'/Blog/' + ${pl.getFileImgTitle()}}" alt="" class="post-image">
+            <div class="post-preview">
+                <h2><a href="single.html" th:text="${pl.title}"></a></h2>
+                <i class="far fa-user"></i><label th:text="${pl.user.getUserName()}"></label>
+                &nbsp;
+                <i class="far fa-calendar"></i><label th:text="${pl.timeCreate}"></label>
+                <p class="preview-text" th:text="${pl.summary}">
+                </p>
+                <a th:href="@{/blog/read-more/{id}(id=${pl.getId_post()})}" class="btn read-more">Read More</a>
+            </div>
+        </div>
+    </div>
+    <div class="slidebar">
+        <div class="section search">
+            <h2 class="section-title">Search</h2>
+            <form th:action="@{/blog/search}" method="get">
+                <input type="text" name="search" class="text-input" placeholder="Search...">
+            </form>
+        </div>
+        <div class="section topics">
+            <h2 class="section-title">Topics</h2>
+            <ul>
+                <li><a th:href="@{/blog/search-topic/{topic}(topic = ${'.mp3'}) }">MP3</a></li>
+                <li><a th:href="@{/blog/search-topic/{topic}(topic = ${'.mp4'}) }">MP4</a></li>
+                <li><a th:href="@{/blog/search-topic/{topic}(topic = ${'.jpg'}) }">DOC</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div th:replace="/home/layout :: footer"></div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script th:replace="/home/layout :: script"></script>
+</html>

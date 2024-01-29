@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="shortcut icon" type="image/png" th:href="@{'/Blog/' + 'icon.jpg'}"/>
+    <title>Blog</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Không đụng vào css trong này khi sửa, sửa ngoài */
+
+        /* Hearder */
+        html, body {
+            /* height: 100%; */
+            display: flex;
+            background-size: cover;
+            flex-wrap: nowrap;
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            color: rgb(66, 47, 47);
+        }
+
+        i {
+            margin: 5px;
+        }
+
+        header {
+            /* position: fixed; */
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 99;
+        }
+
+        .logo {
+            font-size: 2em;
+            color: black;
+            user-select: none;
+        }
+
+        .navigation a {
+            position: relative;
+            font-size: 1.1em;
+            color: black;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 40px;
+        }
+
+        .navigation a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 100%;
+            height: 3px;
+            background: black;
+            border-radius: 5px;
+            transform-origin: right;
+            transform: scaleX(0);
+            transition: transform .5s;
+        }
+
+        .navigation a:hover:after {
+            transform-origin: left;
+            transform: scaleX(1);
+        }
+
+
+
+
+        /* POSTS */
+
+        .container {
+            position: relative;
+            width: 100%;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .container header {
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: 500;
+            text-align: center;
+        }
+        .container .form {
+            margin-top: 30px;
+        }
+        .form .input-box {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form .image-container .input-box {
+            width: 100%;
+            margin-top: 0px;
+        }
+
+        .form .image-container .input-box input {
+            margin-bottom: 20px;
+        }
+
+        .margin-label {
+            margin-top: 20px;
+        }
+
+        .image-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            justify-content: space-between;
+        }
+
+        .image-container > div {
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .image-container > div:last-child {
+            margin-right: 0;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        .select-tag select {
+            font-size: 16px;
+            padding: 10px;
+            height: 50px;
+            margin-top: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            color: #707070;
+            font-size: 1rem;
+            display: inline;
+        }
+
+        .select-tag label {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-box label {
+            color: #333;
+        }
+        .form :where(.input-box input, .select-boxl, textarea) {
+            position: relative;
+            height: 50px;
+            width: 100%;
+            outline: none;
+            font-size: 1rem;
+            color: #707070;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0 15px;
+        }
+        .input-box input:focus {
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+        }
+        .form .column {
+            display: flex;
+            column-gap: 15px;
+        }
+        .form .gender-box {
+            margin-top: 20px;
+        }
+        .gender-box h3 {
+            color: #333;
+            font-size: 1rem;
+            font-weight: 400;
+            margin-bottom: 8px;
+        }
+        .form :where(.gender-option, .gender) {
+            display: flex;
+            align-items: center;
+            column-gap: 50px;
+            flex-wrap: wrap;
+        }
+        .form .gender {
+            column-gap: 5px;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.1);
+            pointer-events: none;
+        }
+
+        .form :where(.gender input, .gender label) {
+            cursor: pointer;
+        }
+        .gender label {
+            color: #707070;
+        }
+        .address :where(input, .select-box) {
+            margin-top: 15px;
+        }
+        .select-box select {
+            height: 100%;
+            width: 100%;
+            outline: none;
+            border: none;
+            color: #707070;
+            font-size: 1rem;
+        }
+
+        /*Responsive*/
+        @media screen and (max-width: 500px) {
+            .form .column {
+                flex-wrap: wrap;
+            }
+            .form :where(.gender-option, .gender) {
+                row-gap: 15px;
+            }
+        }
+        /* CONTENT */
+
+        /* CONTENT */
+        .content {
+            width: 84%;
+            min-height: 100%;
+            margin: 30px auto 30px;
+        }
+
+        .content .main-content {
+            width: 100%;
+            float: left;
+            min-height: 100%;
+
+        }
+
+        .content .main-content .recent-post-title {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .clearfix::after {
+            content:'';
+            display: block;
+            clear: both;
+        }
+
+        .text-input {
+            padding: .7rem 1rem;
+            display: block;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            outline: none;
+            color: #444;
+            line-height: 1.5rem;
+            font-size: 1.2em;
+        }
+
+        /* FOOTER */
+        .footer {
+            position: relative;
+            background: #303036;
+            color: #d3d3d3;
+            height: 350px;
+        }
+
+        .footer .footer-content {
+            border: 1px solid black;
+            height: 300px;
+            display: flex;
+        }
+
+        .footer .footer-content .footer-section {
+            flex: 1;
+            padding: 25px;
+            border:1px solid white;
+        }
+
+        .footer .footer-bottom {
+            position: absolute;
+            background: #343a40;
+            color: #686868;
+            height: 50px;
+            width: 100%;
+            text-align: center;
+            bottom: 0px;
+            left: 0px;
+            padding-top: 15px;
+        }
+
+        .footer .footer-content h1,
+        .footer .footer-content h2 {
+            color: white;
+        }
+
+        .footer .footer-content .about h1 span {
+            color: #05f7ff;
+        }
+
+        .footer .footer-content .about .contact span {
+            display: block;
+            font-size: 1.1em;
+            margin: 8px 0px;
+        }
+
+        .footer .footer-content .about .socials a {
+            border: 1px solid #1d888e;
+            width: 45px;
+            height: 45px;
+            padding-top: 5px;
+            margin-right: 5px;
+            text-align: center;
+            display: inline-block;
+            font-size: 1.3em;
+            border-radius: 5px;
+            color: white;
+            transition: all .3s;
+        }
+
+        .footer .footer-content .links ul a {
+            display: block;
+            margin-left: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            transition: all .5s;
+            list-style: none;
+        }
+
+        .footer .footer-content .links ul a:hover {
+            color: white;
+            margin-left: 40px;
+            transition: all .5s;
+        }
+
+
+        .footer .footer-content .about .socials a:hover {
+            background: #1d888e;
+            color: white;
+            transition: all .5s;
+        }
+
+
+        .footer-section a {
+            color: #d3d3d3;
+        }
+
+
+        .footer .footer-content .contact-form .contact-input {
+            background: #272727;
+            color: #bebdbb;
+            margin-bottom: 10px;
+            line-height: 1.5rem;
+            padding: .7rem 1.4rem;
+            border: none;
+        }
+
+        .footer .footer-content .contact-form .contact-input:focus {
+            background: #1a1a1a;
+        }
+
+
+        .btn-big {
+            border: 2px solid #1d888e;
+            border-radius: .25rem;
+            padding: 5px;
+            background:#1d888e;
+            color: white;
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<header th:fragment="hearder">
+    <h2 class="logo">Blog</h2>
+    <nav class="navigation">
+        <a th:href="@{/blog}">Home</a>
+        <a th:href="@{/blog/create-post}">Create</a>
+        <a th:href="@{/blog/logout}"  style="margin-right: 40px;">Logout</a>
+        <img src="/Blog/background.jpg" style="border-radius: 100%; width: 40px; height: 40px; ">
+        <a th:href="@{/blog/page}" style="margin-left: 0px;" th:text="${session.user.userName}">Name Use</a>
+    </nav>
+</header>
+<!-- footer -->
+<div class="footer" th:fragment="footer">
+    <div class="footer-content">
+        <div class="footer-section about">
+            <h1 class="logo-text">Luois<span>Inspires</span></h1>
+            <p>
+                This is a simple design project blog that conveniently updates the latest news about the game.
+            </p>
+            <div class="contact">
+                <span><i class="fas fa-phone"></i>&nbsp; 123-456-789</span>
+                <span><i class="fas fa-envelope"></i>&nbsp; infor@louisfores.com</span>
+            </div>
+            <div class="socials">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+
+
+        <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <br>
+            <ul>
+                <a href="#">
+                    <li>Events</li>
+                </a>
+                <a href="#">
+                    <li>Team</li>
+                </a>
+                <a href="#">
+                    <li>Mentores</li>
+                </a>
+                <a href="#">
+                    <li>Gallery</li>
+                </a>
+                <a href="#">
+                    <li>Terms and Conditions</li>
+                </a>
+            </ul>
+        </div>
+        <div class="footer-section contact-form">
+            <h2>Contact us</h2>
+            <br>
+            <form action="index.html" method="post">
+                <input type="email" name="email" class="text-input contact-input"
+                       placeholder="Your email address...">
+                <textarea name="message" class="text-input contact-input" placeholder="Your message..."></textarea>
+                <button type="submit" class="btn-big">
+                    <i class="fas fa-envelope"></i><label>Send</label>
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; codingpro.com | Design by Louis Fores
+    </div>
+</div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script th:fragment="script">
+    document.getElementById('image-input').addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            document.getElementById('image-preview').setAttribute('src', e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+    });
+</script>
+</html>

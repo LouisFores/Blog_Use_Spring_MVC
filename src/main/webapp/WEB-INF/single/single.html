@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/single/layout :: head">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+<header th:replace="/single/layout :: hearder"></header>
+<!-- Content -->
+<div class="content clearfix  ">
+    <div class="main-content single">
+        <div class="post-title">
+            <h1 th:text="${post.title}"></h1>
+            <i class="far fa-user"></i><label th:text="${post.user.getUserName()}"></label>
+            &nbsp;
+            <i class="far fa-calendar"></i><label th:text="${post.timeCreate}"></label>
+        </div>
+        <div th:switch="${post.category}">
+                <th:case th:if="${post.category == '.mp3'}">
+                    <audio controls>
+                        <source th:src="@{'/Blog/' + ${post.getFileAudio()}}" type="audio/mpeg">
+                    </audio>
+                </th:case>
+                <th:case th:if="${post.category == '.mp4'}">
+                    <video controls class="post-video">
+                        <source th:src="@{'/Blog/' + ${post.getFileAudio()}}" type="video/mp4">
+                    </video>
+                </th:case>
+                <th:case th:if="${post.category == '.jsp'}">
+                    <img class="post-video" th:src="@{'/Blog/' + ${post.getFileImgTitle()}}" alt="" src="">
+                </th:case>
+            </div>
+        <div class="post-content">
+            <p th:text="${post.mainContent}"></p>
+        </div>
+    </div>
+    <div class="slidebar single">
+        <div class="section popular">
+            <h2 class="section-title">Popular</h2>
+            <div class="post clearfix">
+                <img th:src="@{'/Blog/' + ${post.getFileImgTitle()}}" alt="">
+                <a href="" class="title">How to wear bulletproof vest</a>
+                <i class="far fa-user"></i><label>Shenhe</label>
+            </div>
+            <div class="post clearfix">
+                <img th:src="@{'/Blog/' + ${post.getFileImgTitle()}}" alt="">
+                <a href="" class="title">How to wear bulletproof vest</a>
+                <i class="far fa-user"></i><label>Shenhe</label>
+            </div>
+            <div class="post clearfix">
+                <img th:src="@{'/Blog/' + ${post.getFileImgTitle()}}" alt="">
+                <a href="" class="title">How to wear bulletproof vest</a>
+                <i class="far fa-user"></i><label>Shenhe</label>
+            </div>
+            <div class="post clearfix">
+                <img th:src="@{'/Blog/' + ${post.getFileImgTitle()}}" alt="">
+                <a href="" class="title">How to wear bulletproof vest</a>
+                <i class="far fa-user"></i><label>Shenhe</label>
+            </div>
+            <div class="post clearfix">
+                <img th:src="@{'/Blog/' + ${post.getFileImgTitle()}}" alt="">
+                <a href="" class="title">How to wear bulletproof vest</a>
+                <i class="far fa-user"></i><label>Shenhe</label>
+            </div>
+
+        </div>
+
+        <div class="section topics">
+            <h2 class="section-title">Topics</h2>
+            <ul>
+                <li><a href="#">MP3</a></li>
+                <li><a href="#">MP4</a></li>
+                <li><a href="#">DOC</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="/single/layout :: footer"></div>
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</html>

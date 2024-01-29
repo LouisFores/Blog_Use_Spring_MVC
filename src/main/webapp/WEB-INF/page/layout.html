@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="shortcut icon" type="image/png" th:href="@{'/Blog/' + 'icon.jpg'}"/>
+  <title>Blog</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Không đụng vào css trong này khi sửa, sửa ngoài */
+
+    /* Hearder */
+    html, body {
+      /*display: grid;*/
+      /*height: 100vh;*/
+      background-size: cover;
+      align-items: stretch;
+    }
+
+    a {
+      text-decoration: none;
+      color: black;
+    }
+
+    a:hover {
+      color: rgb(66, 47, 47);
+    }
+
+    i {
+      margin: 5px;
+    }
+
+    header {
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 99;
+    }
+
+    .logo {
+      font-size: 2em;
+      color: black;
+      user-select: none;
+    }
+
+    .navigation a {
+      position: relative;
+      font-size: 1.1em;
+      color: black;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 40px;
+    }
+
+    .navigation a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 3px;
+      background: black;
+      border-radius: 5px;
+      transform-origin: right;
+      transform: scaleX(0);
+      transition: transform .5s;
+    }
+
+    .navigation a:hover:after {
+      transform-origin: left;
+      transform: scaleX(1);
+    }
+
+
+    /* CONTENT */
+    .content {
+      width: 84%;
+      min-height: 100%;
+      margin: 30px auto 30px;
+    }
+
+    .content .main-content {
+      width: 100%;
+      float: left;
+      min-height: 100%;
+
+    }
+
+    .content .main-content .recent-post-title {
+      margin: 20px;
+      text-align: center;
+    }
+
+    .clearfix::after {
+      content:'';
+      display: block;
+      clear: both;
+    }
+
+    .text-input {
+      padding: .7rem 1rem;
+      display: block;
+      width: 100%;
+      border-radius: 5px;
+      border: 1px solid #e0e0e0;
+      outline: none;
+      color: #444;
+      line-height: 1.5rem;
+      font-size: 1.2em;
+    }
+
+
+
+    /* POSTS */
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-block: 2rem;
+      gap: 2rem;
+    }
+
+    .card__image {
+      max-width: 100%;
+      height: 250px;
+      display: block;
+      /*object-fit: cover;*/
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      width: clamp(20rem, calc(20rem + 2vw), 22rem);
+      overflow: hidden;
+      box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
+      border-radius: 1em;
+      background: #ECE9E6;
+      background: linear-gradient(to right, #FFFFFF, #ECE9E6);
+
+    }
+
+
+
+    .card__body {
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+
+    .tag {
+      align-self: flex-start;
+      padding: .25em .75em;
+      border-radius: 1em;
+      font-size: .75rem;
+    }
+
+    .tag + .tag {
+      margin-left: .5em;
+    }
+
+    .tag-brown {
+      background: #D1913C;
+      background: linear-gradient(to bottom, #FFD194, #D1913C);
+      color: #fafafa;
+    }
+
+    .tag-blue {
+      background: #56CCF2;
+      background: linear-gradient(to bottom, #2F80ED, #56CCF2);
+      color: #fafafa;
+    }
+
+    .tag-red {
+      background: #cb2d3e;
+      background: linear-gradient(to bottom, #ef473a, #cb2d3e);
+      color: #fafafa;
+    }
+
+    .card__body h4 {
+      font-size: 1.5rem;
+      text-transform: capitalize;
+    }
+
+    .footer {
+      position: relative;
+      background: #303036;
+      color: #d3d3d3;
+      height: 350px;
+    }
+
+    .footer .footer-content {
+      border: 1px solid black;
+      height: 300px;
+      display: flex;
+    }
+
+    .footer .footer-content .footer-section {
+      flex: 1;
+      padding: 25px;
+      border:1px solid white;
+    }
+
+    .footer .footer-bottom {
+      background: #343a40;
+      color: #686868;
+      height: 50px;
+      width: 100%;
+      text-align: center;
+      bottom: 0px;
+      left: 0px;
+      padding-top: 15px;
+    }
+
+    .footer .footer-content h1,
+    .footer .footer-content h2 {
+      color: white;
+    }
+
+    .footer .footer-content .about h1 span {
+      color: #05f7ff;
+    }
+
+    .footer .footer-content .about .contact span {
+      display: block;
+      font-size: 1.1em;
+      margin: 8px 0px;
+    }
+
+    .footer .footer-content .about .socials a {
+      border: 1px solid #1d888e;
+      width: 45px;
+      height: 45px;
+      padding-top: 5px;
+      margin-right: 5px;
+      text-align: center;
+      display: inline-block;
+      font-size: 1.3em;
+      border-radius: 5px;
+      color: white;
+      transition: all .3s;
+    }
+
+    .footer .footer-content .links ul a {
+      display: block;
+      margin-left: 20px;
+      margin-bottom: 10px;
+      font-size: 1.2em;
+      transition: all .5s;
+      list-style: none;
+    }
+
+    .footer .footer-content .links ul a:hover {
+      color: white;
+      margin-left: 40px;
+      transition: all .5s;
+    }
+
+
+    .footer .footer-content .about .socials a:hover {
+      background: #1d888e;
+      color: white;
+      transition: all .5s;
+    }
+
+
+    .footer-section a {
+      color: #d3d3d3;
+    }
+
+
+    .footer .footer-content .contact-form .contact-input {
+      background: #272727;
+      color: #bebdbb;
+      margin-bottom: 10px;
+      line-height: 1.5rem;
+      padding: .7rem 1.4rem;
+      border: none;
+    }
+
+    .footer .footer-content .contact-form .contact-input:focus {
+      background: #1a1a1a;
+    }
+
+
+    .btn-big {
+      border: 2px solid #1d888e;
+      border-radius: .25rem;
+      padding: 5px;
+      background:#1d888e;
+      color: white;
+      float: right;
+    }
+  </style>
+</head>
+<body>
+<header th:fragment="hearder">
+  <h2 class="logo">Blog</h2>
+  <nav class="navigation">
+    <a  th:href="@{/blog}">Home</a>
+    <a  th:href="@{/blog/create-post}">Create</a>
+    <a th:href="@{/blog/logout}"  style="margin-right: 40px;">Logout</a>
+    <img src="/Blog/background.jpg" style="border-radius: 100%; width: 40px; height: 40px; margin-bottom:-14px; ">
+    <a th:if="${session.user.userName}" th:href="@{/blog/page}" style="margin-left: 0px;" th:text="${session.user.userName}"></a>
+  </nav>
+</header>
+
+<!-- footer -->
+<div class="footer" th:fragment="footer">
+  <div class="footer-content">
+    <div class="footer-section about">
+      <h1 class="logo-text">Luois<span>Inspires</span></h1>
+      <p>
+        This is a simple design project blog that conveniently updates the latest news about the game.
+      </p>
+      <div class="contact">
+        <span><i class="fas fa-phone"></i>&nbsp; 123-456-789</span>
+        <span><i class="fas fa-envelope"></i>&nbsp; infor@louisfores.com</span>
+      </div>
+      <div class="socials">
+        <a href="#"><i class="fab fa-facebook"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+
+    <div class="footer-section links">
+      <h2>Quick Links</h2>
+      <br>
+      <ul>
+        <a href="#"><li>Events</li></a>
+        <a href="#"><li>Team</li></a>
+        <a href="#"><li>Mentores</li></a>
+        <a href="#"><li>Gallery</li></a>
+        <a href="#"><li>Terms and Conditions</li></a>
+      </ul>
+    </div>
+    <div class="footer-section contact-form">
+      <h2>Contact us</h2>
+      <br>
+      <form action="index.html" method="post">
+        <input type="email" name="email" class="text-input contact-input" placeholder="Your email address...">
+        <textarea name="message" class="text-input contact-input" placeholder="Your message..."></textarea>
+        <button type="submit" class="btn btn-big">
+          <i class="fas fa-envelope"></i><label>Send</label>
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; codingpro.com | Design by Louis Fores
+  </div>
+</div>
+</body>
+<!-- Icon -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</html>

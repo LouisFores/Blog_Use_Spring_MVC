@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/post/layout :: head">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<header th:replace="/post/layout :: hearder"></header>
+
+<!-- Content -->
+<div class="content clearfix">
+    <div class="main-content single">
+        <div class="post-title">
+            <h1 class="recent-post-title">Create Post</h1>
+            <section class="container">
+                <form th:action="@{/blog/create-post}" method="post" th:object="${postForm}" novalidate="novalidate" enctype="multipart/form-data" class="form">
+                    <input type="hidden" th:field="*{id_post}">
+                    <div class="image-container">
+                        <div style="border-radius: 5px 5px; border: 2px solid black;">
+                            <img id="image-preview" src="" style="width: 100%; height: 100%;">
+                        </div>
+                        <div class="input-box">
+                            <label>URL ảnh</label>
+                            <input id="image-input" placeholder="URL ảnh" required="" type="file" th:field="*{multipartImgTitle}" />
+                            <label>Tiêu đề</label>
+                            <input id="product_name" name="product_name" placeholder="Tên bài đăng..." required=""
+                                   type="text" th:field="*{title}">
+                            <label>Tóm tắt nội dung</label>
+                            <textarea class="text-input contact-input" placeholder="Tóm tắt..." th:field="*{summary}"></textarea>
+                            <label class="margin-label">Nội dung chính</label>
+                            <textarea class="text-input contact-input" style="width: 100%; height: 150px;"
+                                      placeholder="Nội dung chính..." th:field="*{mainContent}"></textarea>
+                            <label class="margin-label">Tag</label>
+                            <div class="input-box select-tag">
+                                <select name="tag_product" id="tag_product" th:field="*{category}">
+                                    <option th:each="category: ${categoryList}" th:value="${category}" th:text="${category}">
+                                </select>
+                            </div>
+
+                            <label class="margin-label">File audio</label>
+                            <input id="stock_alert" name="product_serviceCharge" placeholder="service" required=""
+                                   type="file" value="0" th:field="*{multipartAudio}"/>
+                            <button style="text-align:center; text-decoration: none;" class="btn-big">Tạo mới</button>
+
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="/post/layout :: footer"></div>
+</body>
+<script th:replace="/post/layout :: script">
+</script>
+</html>
