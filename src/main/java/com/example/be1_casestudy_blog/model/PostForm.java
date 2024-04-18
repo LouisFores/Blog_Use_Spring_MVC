@@ -25,6 +25,8 @@ public class PostForm {
     private MultipartFile multipartImgTitle;
     private MultipartFile multipartAudio;
 
+    private String img;
+    private String audio;
 
     @ManyToOne
     @JoinColumn(name = "id_user")

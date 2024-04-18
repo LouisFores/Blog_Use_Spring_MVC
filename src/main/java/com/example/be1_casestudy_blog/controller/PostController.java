@@ -66,7 +66,7 @@ public class PostController {
     }
 
 
-    @GetMapping("/search/{topic}")
+    @GetMapping("/search-topic/{topic}")
     public ModelAndView searchTopic(@PathVariable String topic) {
         if (topic != null) {
             ModelAndView modelAndView = new ModelAndView("/home/home");
